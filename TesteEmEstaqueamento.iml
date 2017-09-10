@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Documents/Instituto Federal do Maranhao/Monografia/App/Libraries/Jama-1.0.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/Jama-1.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

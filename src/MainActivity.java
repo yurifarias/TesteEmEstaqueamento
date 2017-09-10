@@ -1,5 +1,4 @@
 import Jama.Matrix;
-
 import java.util.Arrays;
 
 public class MainActivity {
