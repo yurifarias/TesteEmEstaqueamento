@@ -2,20 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22be09d0-92ba-4155-89dd-ed2ddc0fb953" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/AnalisesPreliminares.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/Estaca.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/EstacasParalelas.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/EstaqueamentoGeral.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/EstaqueamentoPlano.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/MainActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/SimetriaEmDoisPlanos.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/SimetriaEmUmPlano.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/TesteEmEstaqueamento/SimetriaPorUmEixo.class" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/EstaqueamentoGeral.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Estaca.java" afterPath="$PROJECT_DIR$/src/Estacas.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/EstacasParalelas.java" afterPath="$PROJECT_DIR$/src/EstacasVerticais.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SimetriaEmDoisPlanos.java" afterPath="$PROJECT_DIR$/src/SimetriaPorDoisPlanos.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SimetriaEmUmPlano.java" afterPath="$PROJECT_DIR$/src/SimetriaPorUmPlano.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TesteEmEstaqueamento.iml" afterPath="$PROJECT_DIR$/TesteEmEstaqueamento.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AnalisesPreliminares.java" afterPath="$PROJECT_DIR$/src/AnalisesPreliminares.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EstaqueamentoPlano.java" afterPath="$PROJECT_DIR$/src/EstaqueamentoPlano.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MainActivity.java" afterPath="$PROJECT_DIR$/src/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SimetriaPorUmEixo.java" afterPath="$PROJECT_DIR$/src/SimetriaPorUmEixo.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,12 +27,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="540">
+              <caret line="37" column="47" lean-forward="false" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnalisesPreliminares.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AnalisesPreliminares.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="76" column="12" lean-forward="true" selection-start-line="76" selection-start-column="12" selection-end-line="84" selection-end-column="13" />
+              <folding>
+                <element signature="method#montaMatrizComponentesEstacas#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#calcularMatrizRigidez#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#definirCaso#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeQuadrantes#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testePlanoXY#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testePlanoXZ#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXY1#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXY2#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXY3#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXY4#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXZ1#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXZ2#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXZ3#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#testeSimetriaXZ4#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#cosAi#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#senAi#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#cosWi#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#senWi#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#senAicosWi#0;class#AnalisesPreliminares#0" expanded="false" />
+                <element signature="method#senAisenWi#0;class#AnalisesPreliminares#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimetriaPorUmEixo.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SimetriaPorUmEixo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="60" lean-forward="false" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="60" />
+              <folding>
+                <element signature="method#montarTensorTransformacao2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+                <element signature="method#subdividirMatrizCompontesEstacas2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+                <element signature="method#subdividirMatrizRigidez2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+                <element signature="method#subdividirMatrizEsforcos2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+                <element signature="method#calcularMovElasticoTransformado#0;class#SimetriaPorUmEixo#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimetriaPorUmPlano.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SimetriaPorUmPlano.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1350">
+              <caret line="426" column="91" lean-forward="false" selection-start-line="426" selection-start-column="91" selection-end-line="426" selection-end-column="91" />
+              <folding>
+                <element signature="method#subdividirMatrizCompontesEstacas#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#subdividirMatrizRigidez#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#subdividirMatrizEsforcos#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#acharNovasCoordenadas#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#montarTensorTransformacao#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#calcularComponentesEstacasTransformados#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#calcularRigidezTransformada#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#calcularEsforcosTransformados#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#calcularMovElasticoTransformado#0;class#SimetriaPorUmPlano#0" expanded="false" />
+                <element signature="method#somarReacoesNormais#0;class#SimetriaPorUmPlano#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -59,6 +124,7 @@
       <find>&quot;Estaca &quot; + yi + &quot;,&quot; + zi</find>
       <find>estaca</find>
       <find>estacaSimetricaQI</find>
+      <find>estacas</find>
     </findStrings>
     <replaceStrings>
       <replace>matrizSredL</replace>
@@ -68,6 +134,7 @@
       <replace>simetria</replace>
       <replace>&quot;Estaca &quot; + yi + &quot;,&quot; + zi + &quot;,&quot; + ai + &quot;,&quot; + wi</replace>
       <replace>estacas</replace>
+      <replace>estaqueamento</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -86,13 +153,16 @@
         <option value="$USER_HOME$/Documents/Instituto Federal do Maranhao/Monografia/App/Libraries/Jama-1.0.3.jar!/Jama/Matrix.class" />
         <option value="$PROJECT_DIR$/src/EstaqueamentoGeral.java" />
         <option value="$PROJECT_DIR$/src/SimetriaEmDoisPlanos.java" />
-        <option value="$PROJECT_DIR$/src/SimetriaPorUmEixo.java" />
         <option value="$PROJECT_DIR$/src/EstacasParalelas.java" />
         <option value="$PROJECT_DIR$/src/EstaqueamentoPlanoXY.java" />
-        <option value="$PROJECT_DIR$/src/EstaqueamentoPlano.java" />
         <option value="$PROJECT_DIR$/src/SimetriaEmUmPlano.java" />
+        <option value="$PROJECT_DIR$/src/EstaqueamentoPlano.java" />
+        <option value="$PROJECT_DIR$/src/EstacasVerticais.java" />
+        <option value="$PROJECT_DIR$/src/SimetriaPorDoisPlanos.java" />
         <option value="$PROJECT_DIR$/src/AnalisesPreliminares.java" />
         <option value="$PROJECT_DIR$/src/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/SimetriaPorUmPlano.java" />
+        <option value="$PROJECT_DIR$/src/SimetriaPorUmEixo.java" />
       </list>
     </option>
   </component>
@@ -103,9 +173,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="-4" />
-    <option name="width" value="1920" />
-    <option name="height" value="1084" />
+    <option name="y" value="24" />
+    <option name="width" value="960" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -122,20 +192,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="TesteEmEstaqueamento" type="b2602c69:ProjectViewProjectNode" />
               <item name="TesteEmEstaqueamento" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TesteEmEstaqueamento" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TesteEmEstaqueamento" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TesteEmEstaqueamento" type="b2602c69:ProjectViewProjectNode" />
@@ -150,15 +212,18 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/Jama-1.0.3.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Testes" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -394,6 +459,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="22be09d0-92ba-4155-89dd-ed2ddc0fb953" name="Default" comment="" />
@@ -414,8 +482,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-4" width="1922" height="1092" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="-4" width="1920" height="1084" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -424,12 +491,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32795697" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2671875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3062967" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -444,7 +511,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924336" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -485,7 +552,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/MainActivity.java</url>
-          <line>78</line>
+          <line>86</line>
           <properties />
           <option name="timeStamp" value="60" />
         </line-breakpoint>
@@ -513,9 +580,13 @@
         <state relative-caret-position="68">
           <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
           <folding>
-            <element signature="method#mComponentesDeVetor#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#mRigidez#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#montaMatrizComponentesEstacas#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#calcularMatrizRigidez#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#definirCaso#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeQuadrantes#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testePlanoXY#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testePlanoXZ#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testeSimetriaXY1#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY2#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY3#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY4#0;class#AnalisesPreliminares#0" expanded="false" />
@@ -523,8 +594,6 @@
             <element signature="method#testeSimetriaXZ2#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXZ3#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXZ4#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#testePlanoXY#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#testePlanoXZ#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#cosAi#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#senAi#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#cosWi#0;class#AnalisesPreliminares#0" expanded="false" />
@@ -535,14 +604,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimetriaEmUmPlano.java">
+    <entry file="file://$PROJECT_DIR$/src/SimetriaPorUmPlano.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3842">
           <caret line="226" column="10" lean-forward="false" selection-start-line="226" selection-start-column="10" selection-end-line="226" selection-end-column="10" />
@@ -563,9 +632,13 @@
         <state relative-caret-position="68">
           <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
           <folding>
-            <element signature="method#mComponentesDeVetor#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#mRigidez#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#montaMatrizComponentesEstacas#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#calcularMatrizRigidez#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#definirCaso#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeQuadrantes#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testePlanoXY#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testePlanoXZ#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testeSimetriaXY1#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY2#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY3#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY4#0;class#AnalisesPreliminares#0" expanded="false" />
@@ -573,8 +646,6 @@
             <element signature="method#testeSimetriaXZ2#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXZ3#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXZ4#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#testePlanoXY#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#testePlanoXZ#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#cosAi#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#senAi#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#cosWi#0;class#AnalisesPreliminares#0" expanded="false" />
@@ -585,14 +656,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimetriaEmUmPlano.java">
+    <entry file="file://$PROJECT_DIR$/src/SimetriaPorUmPlano.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3842">
           <caret line="226" column="10" lean-forward="false" selection-start-line="226" selection-start-column="10" selection-end-line="226" selection-end-column="10" />
@@ -607,7 +678,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
@@ -624,7 +695,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Calcular.java" />
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
@@ -640,7 +711,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Calcular.java" />
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
@@ -655,7 +726,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
@@ -681,7 +752,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Calcular.java" />
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
@@ -696,7 +767,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
@@ -712,7 +783,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
@@ -728,7 +799,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
@@ -744,7 +815,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="27" lean-forward="false" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
@@ -754,54 +825,118 @@
     <entry file="file://$PROJECT_DIR$/src/Calcular.java" />
     <entry file="file://$PROJECT_DIR$/src/Calcular.java" />
     <entry file="jar://$USER_HOME$/Documents/Instituto Federal do Maranhao/Monografia/App/Libraries/Jama-1.0.3.jar!/Jama/Matrix.class" />
-    <entry file="file://$PROJECT_DIR$/src/SimetriaPorUmEixo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="125" column="50" lean-forward="false" selection-start-line="125" selection-start-column="50" selection-end-line="125" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimetriaEmDoisPlanos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="77" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/EstaqueamentoPlanoXY.java" />
-    <entry file="file://$PROJECT_DIR$/src/EstacasParalelas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="110" column="0" lean-forward="true" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Estaca.java">
+    <entry file="file://$PROJECT_DIR$/src/Estacas.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="8" column="45" lean-forward="false" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EstaqueamentoGeral.java" />
+    <entry file="file://$PROJECT_DIR$/src/EstaqueamentoPlano.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="4" lean-forward="true" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="101" />
           <folding>
-            <element signature="method#Estaca#0;class#Estaca#0" expanded="false" />
+            <element signature="method#reduzirMatrizCompontesEstacas#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#reduzirMatrizRigidez#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#reduzirMatrizEsforcos#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#acharNovasCoordenadas#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#montarTensorTransformacao#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#calcularComponentesEstacasTransformados#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#calcularRigidezTransformada#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#calcularEsforcosTransformados#0;class#EstaqueamentoPlano#0" expanded="false" />
+            <element signature="method#calcularMovElasticoTransformado#0;class#EstaqueamentoPlano#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EstaqueamentoGeral.java">
+    <entry file="file://$PROJECT_DIR$/src/SimetriaPorDoisPlanos.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="61" lean-forward="false" selection-start-line="6" selection-start-column="61" selection-end-line="6" selection-end-column="61" />
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="true" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding>
+            <element signature="method#acharNovasCoordenadas#0;class#SimetriaPorDoisPlanos#0" expanded="false" />
+            <element signature="method#montarTensorTransformacao#0;class#SimetriaPorDoisPlanos#0" expanded="false" />
+            <element signature="method#calcularComponentesEstacasTransformados#0;class#SimetriaPorDoisPlanos#0" expanded="false" />
+            <element signature="method#calcularRigidezTransformada#0;class#SimetriaPorDoisPlanos#0" expanded="false" />
+            <element signature="method#calcularEsforcosTransformados#0;class#SimetriaPorDoisPlanos#0" expanded="false" />
+            <element signature="method#calcularMovElasticoTransformado#0;class#SimetriaPorDoisPlanos#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="37" column="47" lean-forward="false" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EstacasVerticais.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="78" column="17" lean-forward="false" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="17" />
+          <folding>
+            <element signature="method#reduzirMatrizCompontesEstacas#0;class#EstacasVerticais#0" expanded="false" />
+            <element signature="method#reduzirMatrizRigidez#0;class#EstacasVerticais#0" expanded="false" />
+            <element signature="method#montarMatrizEsforcosReduzidos#0;class#EstacasVerticais#0" expanded="false" />
+            <element signature="method#acharNovasCoordenadas#0;class#EstacasVerticais#0" expanded="false" />
+            <element signature="method#montarTensorTransformacao#0;class#EstacasVerticais#0" expanded="false" />
+            <element signature="method#calcularComponentesEstacasTransformados#0;class#EstacasVerticais#0" expanded="false" />
+            <element signature="method#calcularRigidezTransformada#0;class#EstacasVerticais#0" expanded="false" />
+            <element signature="method#calcularEsforcosTransformados#0;class#EstacasVerticais#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SimetriaPorUmPlano.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1350">
+          <caret line="426" column="91" lean-forward="false" selection-start-line="426" selection-start-column="91" selection-end-line="426" selection-end-column="91" />
+          <folding>
+            <element signature="method#subdividirMatrizCompontesEstacas#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#subdividirMatrizRigidez#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#subdividirMatrizEsforcos#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#acharNovasCoordenadas#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#montarTensorTransformacao#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#calcularComponentesEstacasTransformados#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#calcularRigidezTransformada#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#calcularEsforcosTransformados#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#calcularMovElasticoTransformado#0;class#SimetriaPorUmPlano#0" expanded="false" />
+            <element signature="method#somarReacoesNormais#0;class#SimetriaPorUmPlano#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SimetriaPorUmEixo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="60" lean-forward="false" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="60" />
+          <folding>
+            <element signature="method#montarTensorTransformacao2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+            <element signature="method#subdividirMatrizCompontesEstacas2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+            <element signature="method#subdividirMatrizRigidez2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+            <element signature="method#subdividirMatrizEsforcos2#0;class#SimetriaPorUmEixo#0" expanded="false" />
+            <element signature="method#calcularMovElasticoTransformado#0;class#SimetriaPorUmEixo#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AnalisesPreliminares.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="330">
+          <caret line="76" column="12" lean-forward="true" selection-start-line="76" selection-start-column="12" selection-end-line="84" selection-end-column="13" />
           <folding>
-            <element signature="method#mComponentesDeVetor#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#mRigidez#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#montaMatrizComponentesEstacas#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#calcularMatrizRigidez#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#definirCaso#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeQuadrantes#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testePlanoXY#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testePlanoXZ#0;class#AnalisesPreliminares#0" expanded="false" />
+            <element signature="method#testeSimetriaXY1#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY2#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY3#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXY4#0;class#AnalisesPreliminares#0" expanded="false" />
@@ -809,8 +944,6 @@
             <element signature="method#testeSimetriaXZ2#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXZ3#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#testeSimetriaXZ4#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#testePlanoXY#0;class#AnalisesPreliminares#0" expanded="false" />
-            <element signature="method#testePlanoXZ#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#cosAi#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#senAi#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#cosWi#0;class#AnalisesPreliminares#0" expanded="false" />
@@ -818,45 +951,6 @@
             <element signature="method#senAicosWi#0;class#AnalisesPreliminares#0" expanded="false" />
             <element signature="method#senAisenWi#0;class#AnalisesPreliminares#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimetriaEmUmPlano.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="method#reacosNormais#0;class#SimetriaEmUmPlano#0" expanded="false" />
-            <element signature="method#novasCoordenadas#0;class#SimetriaEmUmPlano#0" expanded="false" />
-            <element signature="method#mRigidezTransformada#0;class#SimetriaEmUmPlano#0" expanded="false" />
-            <element signature="method#esfExternosTransformados#0;class#SimetriaEmUmPlano#0" expanded="false" />
-            <element signature="method#mMovElasticoTransformado#0;class#SimetriaEmUmPlano#0" expanded="false" />
-            <element signature="method#mComponentesDeVetorTransformado#0;class#SimetriaEmUmPlano#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EstaqueamentoPlano.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="41" column="59" lean-forward="false" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
-          <folding>
-            <element signature="method#reacosNormais#0;class#EstaqueamentoPlano#0" expanded="false" />
-            <element signature="method#novasCoordenadas#0;class#EstaqueamentoPlano#0" expanded="false" />
-            <element signature="method#tensorTransformacao#0;class#EstaqueamentoPlano#0" expanded="false" />
-            <element signature="method#mRigidezTransformada#0;class#EstaqueamentoPlano#0" expanded="false" />
-            <element signature="method#esfExternosTransformados#0;class#EstaqueamentoPlano#0" expanded="false" />
-            <element signature="method#mMovElasticoTransformado#0;class#EstaqueamentoPlano#0" expanded="false" />
-            <element signature="method#mComponentesDeVetorTransformado#0;class#EstaqueamentoPlano#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>

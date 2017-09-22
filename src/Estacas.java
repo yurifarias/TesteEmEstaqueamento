@@ -1,4 +1,4 @@
-public class Estaca {
+public class Estacas {
 
     private double posX;
     private double posY;
@@ -6,7 +6,7 @@ public class Estaca {
     private double angCravacao;
     private double angProjecao;
 
-    public Estaca(double x, double y, double z, double alfa, double omega) {
+    public Estacas(double x, double y, double z, double alfa, double omega) {
         posX = x;
         posY = y;
         posZ = z;

@@ -2,6 +2,7 @@ import Jama.Matrix;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AnalisesPreliminares {
 
@@ -16,6 +17,7 @@ public class AnalisesPreliminares {
     private ArrayList<String> eZero = new ArrayList<>();
     private ArrayList<String> ePlanoXY = new ArrayList<>();
     private ArrayList<String> ePlanoXZ = new ArrayList<>();
+
     private String estacaSimetricaQI;
     private String estacaSimetricaQII;
     private String estacaSimetricaQIII;
@@ -25,92 +27,82 @@ public class AnalisesPreliminares {
     private String estacaSimetricaEIII;
     private String estacaSimetricaEIV;
 
-    public char tirarSimetria(Estaca[] estaca) {
+    private Matrix matrizComponentesEstacas;
+    private Matrix matrizRigidez;
 
-        testeQuadrantes(estaca);
+    private char casoSimetria;
 
-        double somaYi = 0;
-        double somaZi = 0;
-        double somaSenAiCosWi = 0;
-        double somaSenAiSenWi = 0;
-        double somaCosAi = 0;
+    public AnalisesPreliminares() {
 
-        for (int i = 0; i < estaca.length; i++) {
-            Estaca e = estaca[i];
+        matrizComponentesEstacas = montaMatrizComponentesEstacas();
+        matrizRigidez = calcularMatrizRigidez();
 
-            double yi = e.getPosY();
-            double zi = e.getPosZ();
-            double ai = e.getAngCrav();
-            double wi = e.getAngProj();
+        casoSimetria = definirCaso();
+    }
 
-            somaYi += yi;
-            somaZi += zi;
-            somaSenAiCosWi += senAicosWi(ai, wi);
-            somaSenAiSenWi += senAisenWi(ai, wi);
-            somaCosAi += cosAi(ai);
+    public void calcularCaso(char caso) {
 
+        if (caso == 'A') {
+
+            EstacasVerticais estacasVerticais = new EstacasVerticais();
+
+            MainActivity.reacoesNormais = estacasVerticais.calcularEsforcosNormais();
+
+        } else if (caso == 'B' || caso == 'C') {
+
+            EstaqueamentoPlano estaqueamentoPlano = new EstaqueamentoPlano();
+
+            MainActivity.reacoesNormais = estaqueamentoPlano.calcularEsforcosNormais(caso);
+
+        } else if (caso == 'D' || caso == 'E') {
+
+            SimetriaPorUmPlano simetriaPorUmPlano = new SimetriaPorUmPlano();
+
+            MainActivity.reacoesNormais = simetriaPorUmPlano.calcularEsforcosNormais(caso);
+
+        } else if (caso == 'F') {
+
+            SimetriaPorDoisPlanos simetriaPorDoisPlanos = new SimetriaPorDoisPlanos();
+
+            MainActivity.reacoesNormais = simetriaPorDoisPlanos.calcularEsforcosNormais();
+
+        } else if (caso == 'G') {
+
+            SimetriaPorUmEixo simetriaPorUmEixo = new SimetriaPorUmEixo();
+
+//            MainActivity.reacoesNormais = simetriaPorUmEixo.calcularEsforcosNormais();
+
+        } else {
+
+            try {
+
+                Matrix matrizMovElastico = matrizRigidez.solve(new Matrix(MainActivity.esforcos));
+                MainActivity.reacoesNormais = (matrizComponentesEstacas.transpose()).times(matrizMovElastico);
+
+            } catch (Exception e) {
+
+                System.out.println("Não é possível achar reações.");
+            }
         }
 
-        /* Todas estacas paralelas, ou seja, o ângulo de cravação
-         de todas as estacas é de 90 graus com o plano do solo */
-        if (somaCosAi == estaca.length) {
+        try {
 
-            return 'A';
+            System.out.println(Arrays.deepToString(MainActivity.reacoesNormais.getArray()));
 
-        } /* Estaqueamento plano no plano XY */
-        else if (testePlanoXY(estaca) && !testeSimetriaXY1(estaca) && !testeSimetriaXY2(estaca)) {
-
-            return 'B';
-
-        } /* Estaqueamento plano no plano XZ */
-        else if (testePlanoXZ(estaca) && !testeSimetriaXZ1(estaca) && !testeSimetriaXZ2(estaca)) {
-
-            return 'C';
-
-        } /* Plano XY de simetria */
-        else if (testeSimetriaXY1(estaca) && testeSimetriaXY2(estaca) && testeSimetriaXY3(estaca) && testeSimetriaXY4(estaca) &&
-                (!testeSimetriaXZ1(estaca) || !testeSimetriaXZ2(estaca) || !testeSimetriaXZ3(estaca) || !testeSimetriaXZ4(estaca))) {
-
-            return 'D';
-
-        } /* Plano XZ de simetria */
-        else if (testeSimetriaXZ1(estaca) && testeSimetriaXZ2(estaca) && testeSimetriaXZ3(estaca) && testeSimetriaXZ4(estaca) &&
-                (!testeSimetriaXY1(estaca) || !testeSimetriaXY2(estaca) || !testeSimetriaXY3(estaca) || !testeSimetriaXY4(estaca))) {
-
-            return 'E';
-
-        }  /* Simetria por dois planos (XY e XZ) */
-        else if (testeSimetriaXY1(estaca) && testeSimetriaXY2(estaca) && testeSimetriaXY3(estaca) && testeSimetriaXY4(estaca) &&
-                testeSimetriaXZ1(estaca) && testeSimetriaXZ2(estaca) && testeSimetriaXZ3(estaca) && testeSimetriaXZ4(estaca)) {
-
-            return 'F';
-
-        } /* Simetria pelo eixo x */
-        else if ((!testeSimetriaXY1(estaca) || !testeSimetriaXY2(estaca) || !testeSimetriaXY3(estaca)) && testeSimetriaXY4(estaca) &&
-                (!testeSimetriaXZ1(estaca) || !testeSimetriaXZ2(estaca) || !testeSimetriaXZ3(estaca)) && testeSimetriaXZ4(estaca) &&
-                somaYi == 0 && somaZi == 0 && somaSenAiCosWi == 0 && somaSenAiSenWi == 0) {
-
-            return 'G';
-
-        } /* Caso geral */
-        else {
-
-            return 'Z';
-
+        } catch (Exception e) {
         }
     }
 
-
     /* Método para calcular as componentes vetoriais de cada estaca i, retornando
-        a matriz P (6 x n) com as respectivas componentes ordenadas pelo índice i, sendo:
-        i o índice da estaca;
-        n o número de estacas. */
-    protected Matrix mComponentesDeVetor(Estaca[] estacas) {
+    a matriz P (6 x n) com as respectivas componentes ordenadas pelo índice i, sendo:
+    i o índice da estaca;
+    n o número de estacas. */
+    protected Matrix montaMatrizComponentesEstacas() {
 
-        double[][] matrizP = new double[6][estacas.length];
+        double[][] matrizP = new double[6][MainActivity.estaqueamento.length];
 
-        for (int i = 0; i < estacas.length; i++) {
-            Estaca e = estacas[i];
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+            Estacas e = MainActivity.estaqueamento[i];
 
             double xi = e.getPosX();
             double yi = e.getPosY();
@@ -132,25 +124,96 @@ public class AnalisesPreliminares {
             matrizP[4][i] = pbi;
             matrizP[5][i] = pci;
         }
+
         return new Matrix(matrizP);
     }
 
     /* Método para a montagem da matriz de rigidez geral S pela multiplicação
     da matriz P por sua transposta, retornando a matriz S (6 x 6). */
-    protected Matrix mRigidez(Estaca[] estacas) {
+    protected Matrix calcularMatrizRigidez() {
 
-        return mComponentesDeVetor(estacas).times(mComponentesDeVetor(estacas).transpose());
+        return matrizComponentesEstacas.times(matrizComponentesEstacas.transpose());
     }
 
-    public char getPlanoSimetria(Estaca[] estacas) {
-        return tirarSimetria(estacas);
+    protected char definirCaso() {
+
+        testeQuadrantes();
+
+        double somaYi = 0;
+        double somaZi = 0;
+        double somaCosAi = 0;
+        double somaSenAiCosWi = 0;
+        double somaSenAiSenWi = 0;
+
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+            Estacas e = MainActivity.estaqueamento[i];
+
+            double yi = e.getPosY();
+            double zi = e.getPosZ();
+            double ai = e.getAngCrav();
+            double wi = e.getAngProj();
+
+            somaYi += yi;
+            somaZi += zi;
+            somaCosAi += cosAi(ai);
+            somaSenAiCosWi += senAicosWi(ai, wi);
+            somaSenAiSenWi += senAisenWi(ai, wi);
+
+        }
+
+        /* Todas estacas paralelas, ou seja, o ângulo de cravação
+         de todas as estacas é de 90 graus com o plano do solo */
+        if (somaCosAi == MainActivity.estaqueamento.length) {
+
+            return 'A';
+
+        } /* Estaqueamento plano no plano XY */
+        else if (testePlanoXY()) {
+
+            return 'B';
+
+        } /* Estaqueamento plano no plano XZ */
+        else if (testePlanoXZ()) {
+
+            return 'C';
+
+        } /* Plano XY de simetria */
+        else if (testeSimetriaXY1() && testeSimetriaXY2() && testeSimetriaXY3() && testeSimetriaXY4() &&
+                (!testeSimetriaXZ1() || !testeSimetriaXZ2() || !testeSimetriaXZ3() || !testeSimetriaXZ4())) {
+
+            return 'D';
+
+        } /* Plano XZ de simetria */
+        else if (testeSimetriaXZ1() && testeSimetriaXZ2() && testeSimetriaXZ3() && testeSimetriaXZ4() &&
+                (!testeSimetriaXY1() || !testeSimetriaXY2() || !testeSimetriaXY3() || !testeSimetriaXY4())) {
+
+            return 'E';
+
+        }  /* Simetria por dois planos (XY e XZ) */
+        else if (testeSimetriaXY1() && testeSimetriaXY2() && testeSimetriaXY3() && testeSimetriaXY4() &&
+                testeSimetriaXZ1() && testeSimetriaXZ2() && testeSimetriaXZ3() && testeSimetriaXZ4()) {
+
+            return 'F';
+
+        } /* Simetria pelo eixo x */
+        else if ((!testeSimetriaXY1() || !testeSimetriaXY2() || !testeSimetriaXY3()) && testeSimetriaXY4() &&
+                (!testeSimetriaXZ1() || !testeSimetriaXZ2() || !testeSimetriaXZ3()) && testeSimetriaXZ4() &&
+                somaYi == 0 && somaZi == 0 && somaSenAiCosWi == 0 && somaSenAiSenWi == 0) {
+
+            return 'G';
+
+        } /* Caso geral */
+        else {
+
+            return 'Z';
+        }
     }
 
-    private void testeQuadrantes(Estaca[] estaca) {
+    protected void testeQuadrantes() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -201,16 +264,86 @@ public class AnalisesPreliminares {
 
 				/* A estaca i esta na origem do sistema de eixos coordenados */
                 eZero.add(yi + ", " + zi + ", " + ai + ", " + wi);
-
             }
         }
     }
 
-    protected boolean testeSimetriaXY1(Estaca[] estaca) {
+    /* Método para testar se todas as estacas estão contidas no plano XY. */
+    protected boolean testePlanoXY() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
+
+            double yi = e.getPosY();
+            double zi = e.getPosZ();
+            double ai = e.getAngCrav();
+            double wi = e.getAngProj();
+
+            String estacai = yi + ", " + zi + ", " + ai + ", " + wi;
+
+            if ((eEI.contains(estacai) || eEII.contains(estacai) || eZero.contains(estacai) && wi == 0)
+                    || (eEI.contains(estacai) || eEII.contains(estacai) || eZero.contains(estacai) && wi == 180)) {
+
+                ePlanoXY.add("true");
+
+            } else {
+
+                ePlanoXY.add("false");
+            }
+        }
+
+        if (!ePlanoXY.contains("false")) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+
+    /* Método para testar se todas as estacas estão contidas no plano XZ. */
+    protected boolean testePlanoXZ() {
+
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+
+            Estacas e = MainActivity.estaqueamento[i];
+
+            double yi = e.getPosY();
+            double zi = e.getPosZ();
+            double ai = e.getAngCrav();
+            double wi = e.getAngProj();
+
+            String estacai = yi + ", " + zi + ", " + ai + ", " + wi;
+
+            if ((eEIII.contains(estacai) || eEIV.contains(estacai) || eZero.contains(estacai) && ai == 0)
+                    || (eEIII.contains(estacai) || eEIV.contains(estacai) || eZero.contains(estacai) && wi == 90)
+                    || (eEIII.contains(estacai) || eEIV.contains(estacai) || eZero.contains(estacai) && wi == 270)) {
+
+                ePlanoXZ.add(estacai);
+
+            } else {
+
+                ePlanoXZ.add("false");
+            }
+        }
+
+        if (!ePlanoXZ.contains("false")) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+    }
+
+    protected boolean testeSimetriaXY1() {
+
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -239,11 +372,11 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXY2(Estaca[] estaca) {
+    protected boolean testeSimetriaXY2() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -270,11 +403,11 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXY3(Estaca[] estaca) {
+    protected boolean testeSimetriaXY3() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -311,11 +444,11 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXY4(Estaca[] estaca) {
+    protected boolean testeSimetriaXY4() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -338,11 +471,11 @@ public class AnalisesPreliminares {
         } return false;
     }
 
-    protected boolean testeSimetriaXZ1(Estaca[] estaca) {
+    protected boolean testeSimetriaXZ1() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -371,11 +504,11 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXZ2(Estaca[] estaca) {
+    protected boolean testeSimetriaXZ2() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -402,11 +535,11 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXZ3(Estaca[] estaca) {
+    protected boolean testeSimetriaXZ3() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -443,11 +576,11 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXZ4(Estaca[] estaca) {
+    protected boolean testeSimetriaXZ4() {
 
-        for (int i = 0; i < estaca.length; i++) {
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-            Estaca e = estaca[i];
+            Estacas e = MainActivity.estaqueamento[i];
 
             double yi = e.getPosY();
             double zi = e.getPosZ();
@@ -470,105 +603,45 @@ public class AnalisesPreliminares {
         } return false;
     }
 
-    protected boolean testePlanoXY(Estaca[] estaca) {
-
-        for (int i = 0; i < estaca.length; i++) {
-
-            Estaca e = estaca[i];
-
-            double yi = e.getPosY();
-            double zi = e.getPosZ();
-            double ai = e.getAngCrav();
-            double wi = e.getAngProj();
-
-            String estacai = yi + ", " + zi + ", " + ai + ", " + wi;
-
-            if (eEI.contains(estacai) || eEII.contains(estacai) || eZero.contains(estacai)) {
-
-                ePlanoXY.add("true");
-
-            } else {
-
-                ePlanoXY.add("false");
-
-            }
-        }
-
-        if (!ePlanoXY.contains("false")) {
-
-            return true;
-
-        } else {
-
-            return false;
-
-        }
-    }
-
-    protected boolean testePlanoXZ(Estaca[] estaca) {
-
-        for (int i = 0; i < estaca.length; i++) {
-
-            Estaca e = estaca[i];
-
-            double yi = e.getPosY();
-            double zi = e.getPosZ();
-            double ai = e.getAngCrav();
-            double wi = e.getAngProj();
-
-            String estacai = yi + ", " + zi + ", " + ai + ", " + wi;
-
-            if (eEIII.contains(estacai) || eEIV.contains(estacai) || eZero.contains(estacai)) {
-
-                ePlanoXZ.add("true");
-
-            } else {
-
-                ePlanoXZ.add("false");
-
-            }
-        }
-
-        if (!ePlanoXZ.contains("false")) {
-
-            return true;
-
-        } else {
-
-            return true;
-
-        }
-    }
-
-    private double cosAi(double ai) {
+    protected double cosAi(double ai) {
 
         double cosAi = Math.cos(Math.toRadians(ai));
 
-        BigDecimal bd = new BigDecimal(cosAi).setScale(12, RoundingMode.HALF_EVEN);
-        return bd.doubleValue();
+        if (cosAi == 0) {
+
+            return cosAi;
+        } else {
+
+            BigDecimal bd = new BigDecimal(cosAi).setScale(6, RoundingMode.HALF_EVEN);
+            return bd.doubleValue();
+        }
     }
 
-    private double senAi(double ai) {
+    protected double senAi(double ai) {
 
         double senAi = Math.sin(Math.toRadians(ai));
 
-        BigDecimal bd = new BigDecimal(senAi).setScale(12, RoundingMode.HALF_EVEN);
-        return bd.doubleValue();
+        if (senAi == 0) {
+
+            return senAi;
+        } else {
+
+            BigDecimal bd = new BigDecimal(senAi).setScale(6, RoundingMode.HALF_EVEN);
+            return bd.doubleValue();
+        }
     }
 
-    private double cosWi(double wi) {
+    protected double cosWi(double wi) {
 
         double cosWi;
 
         if (90 < wi && wi <= 180) {
             cosWi = -Math.cos(Math.toRadians(180 - wi));
 
-        }
-        if (180 < wi && wi <= 270) {
+        } else if (180 < wi && wi <= 270) {
             cosWi = -Math.cos(Math.toRadians(wi - 180));
 
-        }
-        if (270 < wi && wi <= 360) {
+        } else if (270 < wi && wi <= 360) {
             cosWi = Math.cos(Math.toRadians(360 - wi));
 
         } else {
@@ -576,23 +649,27 @@ public class AnalisesPreliminares {
 
         }
 
-        BigDecimal bd = new BigDecimal(cosWi).setScale(12, RoundingMode.HALF_EVEN);
-        return bd.doubleValue();
+        if (cosWi == 0) {
+
+            return cosWi;
+        } else {
+
+            BigDecimal bd = new BigDecimal(cosWi).setScale(6, RoundingMode.HALF_EVEN);
+            return bd.doubleValue();
+        }
     }
 
-    private double senWi(double wi) {
+    protected double senWi(double wi) {
 
         double senWi;
 
         if (90 < wi && wi <= 180) {
             senWi = Math.sin(Math.toRadians(180 - wi));
 
-        }
-        if (180 < wi && wi <= 270) {
+        } else if (180 < wi && wi <= 270) {
             senWi = -Math.sin(Math.toRadians(wi - 180));
 
-        }
-        if (270 < wi && wi <= 360) {
+        } else if (270 < wi && wi <= 360) {
             senWi = -Math.sin(Math.toRadians(360 - wi));
 
         } else {
@@ -600,64 +677,53 @@ public class AnalisesPreliminares {
 
         }
 
-        BigDecimal bd = new BigDecimal(senWi).setScale(12, RoundingMode.HALF_EVEN);
-        return bd.doubleValue();
-    }
+        if (senWi == 0) {
 
-    private double senAicosWi (double ai, double wi) {
-
-        double senAi = Math.sin(Math.toRadians(ai));
-        double cosWi;
-
-        if (90 < wi && wi <= 180) {
-            cosWi = -Math.cos(Math.toRadians(180 - wi));
-
-        }
-        if (180 < wi && wi <= 270) {
-            cosWi = -Math.cos(Math.toRadians(wi - 180));
-
-        }
-        if (270 < wi && wi <= 360) {
-            cosWi = Math.cos(Math.toRadians(360 - wi));
-
+            return senWi;
         } else {
-            cosWi = Math.cos(Math.toRadians(wi));
 
+            BigDecimal bd = new BigDecimal(senWi).setScale(6, RoundingMode.HALF_EVEN);
+            return bd.doubleValue();
         }
-
-        double senAicosWi = senAi*cosWi;
-
-        BigDecimal bd = new BigDecimal(senAicosWi).setScale(12, RoundingMode.HALF_EVEN);
-        return bd.doubleValue();
-
     }
 
-    private double senAisenWi (double ai, double wi) {
+    protected double senAicosWi (double ai, double wi) {
 
-        double senAi = Math.sin(Math.toRadians(ai));
-        double senWi;
+        double senAicosWi = senAi(ai)*cosWi(wi);
 
-        if (90 < wi && wi <= 180) {
-            senWi = -Math.cos(Math.toRadians(180 - wi));
+        if (senAicosWi == 0) {
 
-        }
-        if (180 < wi && wi <= 270) {
-            senWi = -Math.cos(Math.toRadians(wi - 180));
-
-        }
-        if (270 < wi && wi <= 360) {
-            senWi = Math.cos(Math.toRadians(360 - wi));
-
+            return senAicosWi;
         } else {
-            senWi = Math.cos(Math.toRadians(wi));
 
+            BigDecimal bd = new BigDecimal(senAicosWi).setScale(6, RoundingMode.HALF_EVEN);
+            return bd.doubleValue();
         }
-
-        double senAisenWi = senAi*senWi;
-
-        BigDecimal bd = new BigDecimal(senAisenWi).setScale(12, RoundingMode.HALF_EVEN);
-        return bd.doubleValue();
-
     }
 
+    protected double senAisenWi (double ai, double wi) {
+
+        double senAisenWi = senAi(ai)*senWi(wi);
+
+        if (senAisenWi == 0) {
+
+            return senAisenWi;
+        } else {
+
+            BigDecimal bd = new BigDecimal(senAisenWi).setScale(6, RoundingMode.HALF_EVEN);
+            return bd.doubleValue();
+        }
+    }
+
+    public Matrix getMatrizComponentesEstacas() {
+        return matrizComponentesEstacas;
+    }
+
+    public Matrix getMatrizRigidez() {
+        return matrizRigidez;
+    }
+
+    public char getCasoSimetria() {
+        return casoSimetria;
+    }
 }
