@@ -3,10 +3,14 @@ import java.util.Arrays;
 
 public class MainActivity {
 
-    public static double[][] esforcos = {{100}, {0}, {0}, {0}, {0}, {0}};
+    static double diametroEstacas = 0.5;
+    static double comprimentoEstacas = 10;
+    static String fckConcreto = "25";
+
+    static double[][] esforcos = {{100}, {0}, {0}, {0}, {0}, {0}};
 
     /* Exemplo de estaqueamento com todas as estacas paralelas */
-    public static Estacas[] estaqueamento = new Estacas[3];
+    static Estacas[] estaqueamento = new Estacas[3];
 
     /* Exemplo de estaqueamento plano em XY */
 //    Estacas[] estaqueamento = new Estacas[3];
@@ -26,7 +30,8 @@ public class MainActivity {
     /*Exemplo de estaqueamento com simetria em relacao ao eixo x */
 //    public static Estacas[] estaqueamento = new Estacas[5];
 
-    public static Matrix reacoesNormais;
+    static double[] movElastico;
+    static Matrix reacoesNormais;
 
     public static void main(String[] args) {
 
@@ -87,53 +92,5 @@ public class MainActivity {
         System.out.println(casoSimetria);
 
         auxiliar.calcularCaso(casoSimetria);
-
-//        if (casoSimetria == 'A') {
-//
-//            EstacasVerticais estacasVerticais = new EstacasVerticais();
-//
-//            estacasVerticais.calcularEsforcosNormais();
-//
-//        } else if (casoSimetria == 'B' || casoSimetria == 'C') {
-//
-//            EstaqueamentoPlano estaqueamentoPlano = new EstaqueamentoPlano();
-//
-//            Matrix normais = estaqueamentoPlano.reacosNormais();
-//
-//            System.out.println(Arrays.deepToString(normais.getArray()));
-//
-//        } else if (casoSimetria == 'D' || casoSimetria == 'E') {
-//
-//            SimetriaPorUmPlano simetriaEmUmPlano = new SimetriaPorUmPlano();
-//
-//            Matrix normais = simetriaEmUmPlano.reacosNormais();
-//
-//            System.out.println(Arrays.deepToString(normais.getArray()));
-//
-//        } else if (casoSimetria == 'F') {
-//
-//            SimetriaPorDoisPlanos simetriaEmDoisPlanos = new SimetriaPorDoisPlanos();
-//
-//            Matrix normais = simetriaEmDoisPlanos.reacoesNormais();
-//
-//            System.out.println(Arrays.deepToString(normais.getArray()));
-//
-//        }  else if (casoSimetria == 'G') {
-//
-//            SimetriaPorUmEixo simetriaPorUmEixo = new SimetriaPorUmEixo();
-//
-//            Matrix normais = simetriaPorUmEixo.reacoesNormais();
-//
-//            System.out.println(Arrays.deepToString(normais.getArray()));
-//
-//        } else if (casoSimetria == 'Z') {
-//
-//            EstaqueamentoGeral estaqueamentoGeral = new EstaqueamentoGeral();
-//
-//            Matrix normais = estaqueamentoGeral.reacoesNormais();
-//
-//            System.out.println(Arrays.deepToString(normais.getArray()));
-//
-//        }
     }
 }

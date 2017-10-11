@@ -22,12 +22,11 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
     private Matrix matrizMovElasticoSubTransformado2;
 
     private double fi;
-    private double psi;
-
     private double xo;
     private double yo;
     private double zo;
 
+    private double psi;
     private double xoL;
     private double yoL;
     private double zoL;
@@ -47,45 +46,53 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
         calcularEsforcosTransformados();
         calcularMovElasticoTransformado();
 
+        calcularMovimentoElastico(caso);
+
         return somarReacoesNormais();
     }
 
     /* Método chamado para subdividir a matriz das componentes das estacas */
-    protected void subdividirMatrizCompontesEstacas(char caso) {
+    private void subdividirMatrizCompontesEstacas(char caso) {
 
         double[][] matriz1 = new double[3][MainActivity.estaqueamento.length];
         double[][] matriz2 = new double[3][MainActivity.estaqueamento.length];
         double[][] componentes = getMatrizComponentesEstacas().getArray();
 
-        if (caso == 'D') {
+        switch (caso) {
 
-            for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+            case 'D':
 
-                // Matriz de componentes de estacas XYC
-                matriz1[0][i] = componentes[0][i];
-                matriz1[1][i] = componentes[1][i];
-                matriz1[2][i] = componentes[5][i];
+                for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-                // Matriz de componentes de estacas ZAB
-                matriz2[0][i] = componentes[2][i];
-                matriz2[1][i] = componentes[3][i];
-                matriz2[2][i] = componentes[4][i];
-            }
+                    // Matriz de componentes de estacas XYC
+                    matriz1[0][i] = componentes[0][i];
+                    matriz1[1][i] = componentes[1][i];
+                    matriz1[2][i] = componentes[5][i];
 
-        } else if (caso == 'E') {
+                    // Matriz de componentes de estacas ZAB
+                    matriz2[0][i] = componentes[2][i];
+                    matriz2[1][i] = componentes[3][i];
+                    matriz2[2][i] = componentes[4][i];
+                }
 
-            for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+                break;
 
-                // Matriz de componentes de estacas XZB
-                matriz1[0][i] = componentes[0][i];
-                matriz1[1][i] = componentes[2][i];
-                matriz1[2][i] = componentes[4][i];
+            case 'E':
 
-                // Matriz de componentes de estacas YAC
-                matriz1[0][i] = componentes[1][i];
-                matriz1[1][i] = componentes[3][i];
-                matriz1[2][i] = componentes[5][i];
-            }
+                for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+
+                    // Matriz de componentes de estacas XZB
+                    matriz1[0][i] = componentes[0][i];
+                    matriz1[1][i] = componentes[2][i];
+                    matriz1[2][i] = componentes[4][i];
+
+                    // Matriz de componentes de estacas YAC
+                    matriz1[0][i] = componentes[1][i];
+                    matriz1[1][i] = componentes[3][i];
+                    matriz1[2][i] = componentes[5][i];
+                }
+
+                break;
         }
 
         // [p]xyc ou [p]xzb
@@ -96,66 +103,72 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
     }
 
     /* Método chamado para subdividir a matriz de rigidez do estaqueamento */
-    protected void subdividirMatrizRigidez(char caso) {
+    private void subdividirMatrizRigidez(char caso) {
 
         double[][] matriz1 = new double[3][3];
         double[][] matriz2 = new double[3][3];
 
-        if (caso == 'D') {
+        switch (caso) {
 
-            // Matriz de rigidez XYC
-            matriz1[0][0] = getMatrizRigidez().getArray()[0][0];
-            matriz1[0][1] = getMatrizRigidez().getArray()[0][1];
-            matriz1[0][2] = getMatrizRigidez().getArray()[0][5];
+            case 'D':
 
-            matriz1[1][0] = getMatrizRigidez().getArray()[1][0];
-            matriz1[1][1] = getMatrizRigidez().getArray()[1][1];
-            matriz1[1][2] = getMatrizRigidez().getArray()[1][5];
+                // Matriz de rigidez XYC
+                matriz1[0][0] = getMatrizRigidez().getArray()[0][0];
+                matriz1[0][1] = getMatrizRigidez().getArray()[0][1];
+                matriz1[0][2] = getMatrizRigidez().getArray()[0][5];
 
-            matriz1[2][0] = getMatrizRigidez().getArray()[5][0];
-            matriz1[2][1] = getMatrizRigidez().getArray()[5][1];
-            matriz1[2][2] = getMatrizRigidez().getArray()[5][5];
+                matriz1[1][0] = getMatrizRigidez().getArray()[1][0];
+                matriz1[1][1] = getMatrizRigidez().getArray()[1][1];
+                matriz1[1][2] = getMatrizRigidez().getArray()[1][5];
 
-            // Matriz de rigidez ZAB
-            matriz2[0][0] = getMatrizRigidez().getArray()[2][2];
-            matriz2[0][1] = getMatrizRigidez().getArray()[2][3];
-            matriz2[0][2] = getMatrizRigidez().getArray()[2][4];
+                matriz1[2][0] = getMatrizRigidez().getArray()[5][0];
+                matriz1[2][1] = getMatrizRigidez().getArray()[5][1];
+                matriz1[2][2] = getMatrizRigidez().getArray()[5][5];
 
-            matriz2[1][0] = getMatrizRigidez().getArray()[3][2];
-            matriz2[1][1] = getMatrizRigidez().getArray()[3][3];
-            matriz2[1][2] = getMatrizRigidez().getArray()[3][4];
+                // Matriz de rigidez ZAB
+                matriz2[0][0] = getMatrizRigidez().getArray()[2][2];
+                matriz2[0][1] = getMatrizRigidez().getArray()[2][3];
+                matriz2[0][2] = getMatrizRigidez().getArray()[2][4];
 
-            matriz1[2][0] = getMatrizRigidez().getArray()[4][2];
-            matriz1[2][1] = getMatrizRigidez().getArray()[4][3];
-            matriz1[2][2] = getMatrizRigidez().getArray()[4][4];
+                matriz2[1][0] = getMatrizRigidez().getArray()[3][2];
+                matriz2[1][1] = getMatrizRigidez().getArray()[3][3];
+                matriz2[1][2] = getMatrizRigidez().getArray()[3][4];
 
-        } else if (caso == 'E') {
+                matriz1[2][0] = getMatrizRigidez().getArray()[4][2];
+                matriz1[2][1] = getMatrizRigidez().getArray()[4][3];
+                matriz1[2][2] = getMatrizRigidez().getArray()[4][4];
 
-            // Matriz de rigidez XZB
-            matriz1[0][0] = getMatrizRigidez().getArray()[0][0];
-            matriz1[0][1] = getMatrizRigidez().getArray()[0][2];
-            matriz1[0][2] = getMatrizRigidez().getArray()[0][4];
+                break;
 
-            matriz1[1][0] = getMatrizRigidez().getArray()[2][0];
-            matriz1[1][1] = getMatrizRigidez().getArray()[2][2];
-            matriz1[1][2] = getMatrizRigidez().getArray()[2][4];
+            case 'E':
 
-            matriz1[2][0] = getMatrizRigidez().getArray()[4][0];
-            matriz1[2][1] = getMatrizRigidez().getArray()[4][2];
-            matriz1[2][2] = getMatrizRigidez().getArray()[4][4];
+                // Matriz de rigidez XZB
+                matriz1[0][0] = getMatrizRigidez().getArray()[0][0];
+                matriz1[0][1] = getMatrizRigidez().getArray()[0][2];
+                matriz1[0][2] = getMatrizRigidez().getArray()[0][4];
 
-            // Matriz de rigidez YAC
-            matriz1[0][0] = getMatrizRigidez().getArray()[1][1];
-            matriz1[0][1] = getMatrizRigidez().getArray()[1][3];
-            matriz1[0][2] = getMatrizRigidez().getArray()[1][5];
+                matriz1[1][0] = getMatrizRigidez().getArray()[2][0];
+                matriz1[1][1] = getMatrizRigidez().getArray()[2][2];
+                matriz1[1][2] = getMatrizRigidez().getArray()[2][4];
 
-            matriz1[1][0] = getMatrizRigidez().getArray()[3][1];
-            matriz1[1][1] = getMatrizRigidez().getArray()[3][3];
-            matriz1[1][2] = getMatrizRigidez().getArray()[3][5];
+                matriz1[2][0] = getMatrizRigidez().getArray()[4][0];
+                matriz1[2][1] = getMatrizRigidez().getArray()[4][2];
+                matriz1[2][2] = getMatrizRigidez().getArray()[4][4];
 
-            matriz1[2][0] = getMatrizRigidez().getArray()[5][1];
-            matriz1[2][1] = getMatrizRigidez().getArray()[5][3];
-            matriz1[2][2] = getMatrizRigidez().getArray()[5][5];
+                // Matriz de rigidez YAC
+                matriz1[0][0] = getMatrizRigidez().getArray()[1][1];
+                matriz1[0][1] = getMatrizRigidez().getArray()[1][3];
+                matriz1[0][2] = getMatrizRigidez().getArray()[1][5];
+
+                matriz1[1][0] = getMatrizRigidez().getArray()[3][1];
+                matriz1[1][1] = getMatrizRigidez().getArray()[3][3];
+                matriz1[1][2] = getMatrizRigidez().getArray()[3][5];
+
+                matriz1[2][0] = getMatrizRigidez().getArray()[5][1];
+                matriz1[2][1] = getMatrizRigidez().getArray()[5][3];
+                matriz1[2][2] = getMatrizRigidez().getArray()[5][5];
+
+                break;
         }
 
         // [S]xyc ou [S]xzb
@@ -166,34 +179,40 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
     }
 
     /* Método chamado para reduzir a matriz de esforços externos */
-    protected void subdividirMatrizEsforcos(char caso) {
+    private void subdividirMatrizEsforcos(char caso) {
 
         double[][] matriz1 = new double[3][1];
         double[][] matriz2 = new double[3][1];
 
-        if (caso == 'D') {
+        switch (caso) {
 
-            // Matriz dos esforços XYC
-            matriz1[0][0] = MainActivity.esforcos[0][0];
-            matriz1[1][0] = MainActivity.esforcos[1][0];
-            matriz1[2][0] = MainActivity.esforcos[5][0];
+            case 'D':
 
-            // Matriz dos esforços ZAB
-            matriz2[0][0] = MainActivity.esforcos[2][0];
-            matriz2[1][0] = MainActivity.esforcos[3][0];
-            matriz2[2][0] = MainActivity.esforcos[4][0];
+                // Matriz dos esforços XYC
+                matriz1[0][0] = MainActivity.esforcos[0][0];
+                matriz1[1][0] = MainActivity.esforcos[1][0];
+                matriz1[2][0] = MainActivity.esforcos[5][0];
 
-        } else if (caso == 'E') {
+                // Matriz dos esforços ZAB
+                matriz2[0][0] = MainActivity.esforcos[2][0];
+                matriz2[1][0] = MainActivity.esforcos[3][0];
+                matriz2[2][0] = MainActivity.esforcos[4][0];
 
-            // Matriz dos esforços XZB
-            matriz1[0][0] = MainActivity.esforcos[0][0];
-            matriz1[1][0] = MainActivity.esforcos[2][0];
-            matriz1[2][0] = MainActivity.esforcos[4][0];
+                break;
 
-            // Matriz dos esforços YAC
-            matriz2[0][0] = MainActivity.esforcos[1][0];
-            matriz2[1][0] = MainActivity.esforcos[3][0];
-            matriz2[2][0] = MainActivity.esforcos[5][0];
+            case 'E':
+
+                // Matriz dos esforços XZB
+                matriz1[0][0] = MainActivity.esforcos[0][0];
+                matriz1[1][0] = MainActivity.esforcos[2][0];
+                matriz1[2][0] = MainActivity.esforcos[4][0];
+
+                // Matriz dos esforços YAC
+                matriz2[0][0] = MainActivity.esforcos[1][0];
+                matriz2[1][0] = MainActivity.esforcos[3][0];
+                matriz2[2][0] = MainActivity.esforcos[5][0];
+
+                break;
         }
 
         // [F]xyc ou [F]xzb
@@ -208,103 +227,130 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
     assim como as outras novas coordenadas xoL e yoL após a translação dos eixos originais x e y, e
     o ângulo de rotação psi após a rotação em torno do eixo z como aritifício para solucionar os
     casos de estaqueamento com simetria por um plano. */
-    protected void acharNovasCoordenadas(char caso) {
+    private void acharNovasCoordenadas(char caso) {
 
         double[][] mS1 = matrizRigidezSubdividida1.getArray();
         double[][] mS2 = matrizRigidezSubdividida2.getArray();
 
-        if (caso == 'D') {
+        if (mS1[0][1] == 0) {
 
-            // Dados auxiliares para o sistema XYC
+            fi = 0;
+
+        } else {
+
             fi = (Math.atan((2 * mS1[0][1]) / (mS1[0][0] - mS1[1][1]))) / 2;
-            xo = (mS1[1][2] * mS1[0][0] - mS1[0][2] * mS1[0][1]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
-            yo = (mS1[1][2] * mS1[0][1] - mS1[0][2] * mS1[1][1]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
+        }
 
-            // Dados auxiliares para os sistema ZAB
+        if ((mS2[0][0] * (mS2[1][1] - mS2[2][2]) + Math.pow(mS2[0][2], 2) - Math.pow(mS2[0][1], 2)) == 0) {
+
+            psi = 0;
+
+        } else {
+
             psi = (Math.atan(2 * (mS2[0][0] * mS2[1][2] - mS2[0][1] * mS2[0][2]) /
                     (mS2[0][0] * (mS2[1][1] - mS2[2][2]) + Math.pow(mS2[0][2], 2) - Math.pow(mS2[0][1], 2)))) / 2;
+        }
 
-            xoL = (mS2[0][1] * Math.sin(psi) - mS2[0][2] * Math.cos(psi)) / mS2[0][0];
-            yoL = (mS2[0][1] * Math.cos(psi) + mS2[0][2] * Math.sin(psi)) / mS2[0][0];
+        switch (caso) {
 
-        } if (caso == 'E') {
+            case 'D':
 
-            // Dados auxiliares para o sistema XZB
-            fi = (Math.atan((2 * mS1[0][1]) / (mS1[0][0] - mS1[1][1]))) / 2;
-            xo = (mS1[0][1] * mS1[0][2] - mS1[0][0] * mS1[1][2]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
-            zo = (mS1[1][1] * mS1[0][2] - mS1[0][1] * mS1[1][2]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
+                // Dados auxiliares para o sistema XYC
 
-            // Dados auxiliares para o sistema YAC
-            psi = (Math.atan(2 * (mS2[1][2] * mS2[0][0] - mS2[0][1] * mS2[0][2]) /
-                    (mS2[0][0] * (mS2[1][1] - mS2[2][2]) + Math.pow(mS2[0][2], 2) - Math.pow(mS2[0][1], 2)))) / 2;
+                xo = (mS1[0][0] * mS1[1][2] - mS1[0][1] * mS1[0][2]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
+                yo = (mS1[0][1] * mS1[1][2] - mS1[1][1] * mS1[0][2]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
 
-            xoL = ( mS2[0][2] * Math.cos(psi) - mS2[0][1] * Math.sin(psi)) / mS2[0][0];
-            zoL = (-mS2[0][2] * Math.sin(psi) - mS2[0][1] * Math.cos(psi)) / mS2[0][0];
+                // Dados auxiliares para os sistema ZAB
+
+                xoL = (mS2[0][1] * Math.sin(psi) - mS2[0][2] * Math.cos(psi)) / mS2[0][0];
+                yoL = (mS2[0][1] * Math.cos(psi) + mS2[0][2] * Math.sin(psi)) / mS2[0][0];
+
+                break;
+
+            case 'E':
+
+                // Dados auxiliares para o sistema XZB
+
+                xo = (mS1[0][1] * mS1[0][2] - mS1[0][0] * mS1[1][2]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
+                zo = (mS1[1][1] * mS1[0][2] - mS1[0][1] * mS1[1][2]) / (mS1[0][0] * mS1[1][1] - Math.pow(mS1[0][1], 2));
+
+                // Dados auxiliares para o sistema YAC
+
+                xoL = ( mS2[0][2] * Math.cos(psi) - mS2[0][1] * Math.sin(psi)) / mS2[0][0];
+                zoL = (-mS2[0][2] * Math.sin(psi) - mS2[0][1] * Math.cos(psi)) / mS2[0][0];
+
+                break;
         }
     }
 
     /* Método para criar a matriz de trnasformação [T], ou tensor de transformação [T], referente aos
     casos de estaquemaneto com simetria pelo plano XY ou XZ */
-    protected void montarTensorTransformacao(char planoSimetria) {
+    private void montarTensorTransformacao(char caso) {
 
         double[][] matriz1 = new double[3][3];
         double[][] matriz2 = new double[3][3];
 
-        if (planoSimetria == 'D') {
+        switch (caso) {
 
-            // Tensor transformação XYZ
-            matriz1[0][0] = Math.cos(fi);
-            matriz1[0][1] = Math.sin(fi);
-            matriz1[0][2] = 0;
+            case 'D':
 
-            matriz1[1][0] = -Math.sin(fi);
-            matriz1[1][1] = Math.cos(fi);
-            matriz1[1][2] = 0;
+                // Tensor transformação XYZ
+                matriz1[0][0] = Math.cos(fi);
+                matriz1[0][1] = Math.sin(fi);
+                matriz1[0][2] = 0;
 
-            matriz1[2][0] = yo;
-            matriz1[2][1] = -xo;
-            matriz1[2][2] = 1;
+                matriz1[1][0] = -Math.sin(fi);
+                matriz1[1][1] = Math.cos(fi);
+                matriz1[1][2] = 0;
 
-            // Tensor transformação ZAB
-            matriz2[0][0] = 1;
-            matriz2[0][1] = 0;
-            matriz2[0][2] = 0;
+                matriz1[2][0] = yo;
+                matriz1[2][1] = -xo;
+                matriz1[2][2] = 1;
 
-            matriz2[1][0] = -yoL;
-            matriz2[1][1] = Math.cos(psi);
-            matriz2[1][2] = Math.sin(psi);
+                // Tensor transformação ZAB
+                matriz2[0][0] = 1;
+                matriz2[0][1] = 0;
+                matriz2[0][2] = 0;
 
-            matriz2[2][0] = xoL;
-            matriz2[2][1] = -Math.sin(psi);
-            matriz2[2][2] = Math.cos(psi);
+                matriz2[1][0] = -yoL;
+                matriz2[1][1] = Math.cos(psi);
+                matriz2[1][2] = Math.sin(psi);
 
-        } if (planoSimetria == 'E') {
+                matriz2[2][0] = xoL;
+                matriz2[2][1] = -Math.sin(psi);
+                matriz2[2][2] = Math.cos(psi);
 
-            // Tensor transformação XZB
-            matriz1[0][0] = Math.cos(fi);
-            matriz1[0][1] = Math.sin(fi);
-            matriz1[0][2] = 0;
+                break;
 
-            matriz1[1][0] = -Math.sin(fi);
-            matriz1[1][1] = Math.cos(fi);
-            matriz1[1][2] = 0;
+            case 'E':
 
-            matriz1[2][0] = -zo;
-            matriz1[2][1] = xo;
-            matriz1[2][2] = 1;
+                // Tensor transformação XZB
+                matriz1[0][0] = Math.cos(fi);
+                matriz1[0][1] = Math.sin(fi);
+                matriz1[0][2] = 0;
 
-            // Tensor transformação YAC
-            matriz2[0][0] = 1;
-            matriz2[0][1] = 0;
-            matriz2[0][2] = 0;
+                matriz1[1][0] = -Math.sin(fi);
+                matriz1[1][1] = Math.cos(fi);
+                matriz1[1][2] = 0;
 
-            matriz2[1][0] = zoL;
-            matriz2[1][1] = Math.cos(psi);
-            matriz2[1][2] = Math.sin(psi);
+                matriz1[2][0] = -zo;
+                matriz1[2][1] = xo;
+                matriz1[2][2] = 1;
 
-            matriz2[2][0] = -xoL;
-            matriz2[2][1] = -Math.sin(psi);
-            matriz2[2][2] = Math.cos(psi);
+                // Tensor transformação YAC
+                matriz2[0][0] = 1;
+                matriz2[0][1] = 0;
+                matriz2[0][2] = 0;
+
+                matriz2[1][0] = zoL;
+                matriz2[1][1] = Math.cos(psi);
+                matriz2[1][2] = Math.sin(psi);
+
+                matriz2[2][0] = -xoL;
+                matriz2[2][1] = -Math.sin(psi);
+                matriz2[2][2] = Math.cos(psi);
+
+                break;
         }
 
         // [T]xyc ou [T]xzb
@@ -317,7 +363,7 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
     /* Método para calcular as matrizes de componentes de estaca transformados [p'], aplicando o tensor de
     transformação [T], retornando duas matrizes 3 x n: [p'] = [T] * [p],
     onde n é número de estacas */
-    protected void calcularComponentesEstacasTransformados() {
+    private void calcularComponentesEstacasTransformados() {
 
         // [p]'xyc ou [p]'xzb
         matrizComponentesEstacasSubTransformada1 = tensorTransformacao1.times(matrizComponentesEstacasSubdividida1);
@@ -328,7 +374,7 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
 
     /* Método para calcular as matrizes de rigidez transformadas [S'], aplicando o tensor de transformação [T],
     retornando duas matrizes 3 x 3: [S'] = [T] * [S] * [T]transposta */
-    protected void calcularRigidezTransformada() {
+    private void calcularRigidezTransformada() {
 
         // [S]'xyc ou [S]'xzb
         matrizRigidezSubTransformada1 = tensorTransformacao1.times(matrizRigidezSubdividida1);
@@ -339,7 +385,7 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
 
     /* Método para calcular as matrizes de esforços transformados [F'], aplicando o tensor de transformação [T],
     retornando duas matrizes 3 x 1: [F'] = [T] * [F] */
-    protected void calcularEsforcosTransformados() {
+    private void calcularEsforcosTransformados() {
 
         // [F]'xyc ou [F]xzb
         matrizEsforcosSubTransformada1 = tensorTransformacao1.times(matrizEsforcosExternosSubdividida1);
@@ -351,7 +397,7 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
     /* Método para calcular as matrizes do movimento elástico transformado do bloco [v'], após a transformação
     da matriz de rigidez [S'] e da matriz do esforços externos [F'],
     retornando duas matrizes 3 x 1: [v'] = [S' ^ -1] * [F'] */
-    protected void calcularMovElasticoTransformado() {
+    private void calcularMovElasticoTransformado() {
 
         double[][] vL1 = new double[3][1];
         double[][] vL2 = new double[3][1];
@@ -403,18 +449,18 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
 
         } else {
 
-            vL2[2][0] = matrizEsforcosSubTransformada2.getArray()[1][0] / matrizRigidezSubTransformada2.getArray()[1][1];
+            vL2[1][0] = matrizEsforcosSubTransformada2.getArray()[1][0] / matrizRigidezSubTransformada2.getArray()[1][1];
 
         }
 
         // vb' ou vc'
         if (matrizRigidezSubTransformada2.getArray()[2][2] == 0) {
 
-            vL2[2][2] = 0;
+            vL2[2][0] = 0;
 
         } else {
 
-            vL2[2][2] = matrizEsforcosSubTransformada2.getArray()[2][0] / matrizRigidezSubTransformada2.getArray()[2][2];
+            vL2[2][0] = matrizEsforcosSubTransformada2.getArray()[2][0] / matrizRigidezSubTransformada2.getArray()[2][2];
         }
 
         // [v]'xyc ou [v]'xzb
@@ -424,11 +470,44 @@ public class SimetriaPorUmPlano extends AnalisesPreliminares {
         matrizMovElasticoSubTransformado2 = new Matrix(vL2);
     }
 
-    /* Método para somar os valores das reações encontradas pelas subdivisões do cálculo de estaqueamento  */
-    protected Matrix somarReacoesNormais() {
+    private void calcularMovimentoElastico(char caso) {
 
-        double[][] matriz1 = (matrizComponentesEstacasSubTransformada1.transpose()).times(matrizMovElasticoSubTransformado1).getArray();
-        double[][] matriz2 = (matrizComponentesEstacasSubTransformada2.transpose()).times(matrizMovElasticoSubTransformado2).getArray();
+        double[] matriz = new double[6];
+
+        switch (caso) {
+
+            case 'D':
+
+                matriz[0] = (tensorTransformacao1.transpose()).times(matrizMovElasticoSubTransformado1).getArray()[0][0];
+                matriz[1] = (tensorTransformacao1.transpose()).times(matrizMovElasticoSubTransformado1).getArray()[1][0];
+                matriz[2] = (tensorTransformacao2.transpose()).times(matrizMovElasticoSubTransformado2).getArray()[0][0];
+                matriz[3] = (tensorTransformacao2.transpose()).times(matrizMovElasticoSubTransformado2).getArray()[1][0];
+                matriz[4] = (tensorTransformacao2.transpose()).times(matrizMovElasticoSubTransformado2).getArray()[2][0];
+                matriz[5] = (tensorTransformacao1.transpose()).times(matrizMovElasticoSubTransformado1).getArray()[2][0];
+
+                break;
+
+            case 'E':
+
+                matriz[0] = (tensorTransformacao1.transpose()).times(matrizMovElasticoSubTransformado1).getArray()[0][0];
+                matriz[1] = (tensorTransformacao2.transpose()).times(matrizMovElasticoSubTransformado2).getArray()[0][0];
+                matriz[2] = (tensorTransformacao1.transpose()).times(matrizMovElasticoSubTransformado1).getArray()[1][0];
+                matriz[3] = (tensorTransformacao2.transpose()).times(matrizMovElasticoSubTransformado2).getArray()[1][0];
+                matriz[4] = (tensorTransformacao1.transpose()).times(matrizMovElasticoSubTransformado1).getArray()[2][0];
+                matriz[5] = (tensorTransformacao2.transpose()).times(matrizMovElasticoSubTransformado2).getArray()[2][0];
+
+                break;
+        }
+
+        MainActivity.movElastico = matriz;
+    }
+
+    /* Método para somar os valores das reações encontradas pelas subdivisões do cálculo de estaqueamento  */
+    private Matrix somarReacoesNormais() {
+
+        double[][] matriz1 = ((getMatrizRigidezEstacas().times(matrizComponentesEstacasSubTransformada1.transpose())).times(matrizMovElasticoSubTransformado1)).getArray();
+        double[][] matriz2 = ((getMatrizRigidezEstacas().times(matrizComponentesEstacasSubTransformada2.transpose())).times(matrizMovElasticoSubTransformado2)).getArray();
+
         double[][] matriz = new double[MainActivity.estaqueamento.length][1];
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {

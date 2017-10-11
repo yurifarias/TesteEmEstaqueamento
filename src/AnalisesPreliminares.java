@@ -27,6 +27,9 @@ public class AnalisesPreliminares {
     private String estacaSimetricaEIII;
     private String estacaSimetricaEIV;
 
+    private double modElasticidade;
+
+    private Matrix matrizRigidezEstacas;
     private Matrix matrizComponentesEstacas;
     private Matrix matrizRigidez;
 
@@ -34,7 +37,8 @@ public class AnalisesPreliminares {
 
     public AnalisesPreliminares() {
 
-        matrizComponentesEstacas = montaMatrizComponentesEstacas();
+        matrizRigidezEstacas = montarMatrizRigidezEstacas();
+        matrizComponentesEstacas = montarMatrizComponentesEstacas();
         matrizRigidez = calcularMatrizRigidez();
 
         casoSimetria = definirCaso();
@@ -70,7 +74,7 @@ public class AnalisesPreliminares {
 
             SimetriaPorUmEixo simetriaPorUmEixo = new SimetriaPorUmEixo();
 
-//            MainActivity.reacoesNormais = simetriaPorUmEixo.calcularEsforcosNormais();
+            MainActivity.reacoesNormais = simetriaPorUmEixo.calcularEsforcosNormais();
 
         } else {
 
@@ -93,11 +97,37 @@ public class AnalisesPreliminares {
         }
     }
 
+    private Matrix montarMatrizRigidezEstacas() {
+
+        determinarFckConcreto();
+
+        double[][] matriz = new double[MainActivity.estaqueamento.length][MainActivity.estaqueamento.length];
+
+        double rigidezEstaca = (modElasticidade * Math.PI * MainActivity.diametroEstacas) / (4 * MainActivity.comprimentoEstacas);
+
+        for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+
+            for (int j = 0; j < MainActivity.estaqueamento.length; j++) {
+
+                if (i == j) {
+
+                    matriz[i][j] = rigidezEstaca;
+
+                } else {
+
+                    matriz[i][j] = 0;
+                }
+            }
+        }
+
+        return new Matrix(matriz);
+    }
+
     /* Método para calcular as componentes vetoriais de cada estaca i, retornando
     a matriz P (6 x n) com as respectivas componentes ordenadas pelo índice i, sendo:
     i o índice da estaca;
     n o número de estacas. */
-    protected Matrix montaMatrizComponentesEstacas() {
+    private Matrix montarMatrizComponentesEstacas() {
 
         double[][] matrizP = new double[6][MainActivity.estaqueamento.length];
 
@@ -130,12 +160,52 @@ public class AnalisesPreliminares {
 
     /* Método para a montagem da matriz de rigidez geral S pela multiplicação
     da matriz P por sua transposta, retornando a matriz S (6 x 6). */
-    protected Matrix calcularMatrizRigidez() {
+    private Matrix calcularMatrizRigidez() {
 
-        return matrizComponentesEstacas.times(matrizComponentesEstacas.transpose());
+        return (matrizComponentesEstacas.times(matrizRigidezEstacas)).times(matrizComponentesEstacas.transpose());
     }
 
-    protected char definirCaso() {
+    private void determinarFckConcreto() {
+
+        switch (MainActivity.fckConcreto) {
+            case "20":
+
+                modElasticidade = 21 * Math.pow(10, 9);
+                break;
+
+            case "25":
+
+                modElasticidade = 24 * Math.pow(10, 9);
+                break;
+
+            case "30":
+
+                modElasticidade = 27 * Math.pow(10, 9);
+                break;
+
+            case "35":
+
+                modElasticidade = 29 * Math.pow(10, 9);
+                break;
+
+            case "40":
+
+                modElasticidade = 32 * Math.pow(10, 9);
+                break;
+
+            case "45":
+
+                modElasticidade = 34 * Math.pow(10, 9);
+                break;
+
+            case "50":
+
+                modElasticidade = 37 * Math.pow(10, 9);
+                break;
+        }
+    }
+
+    private char definirCaso() {
 
         testeQuadrantes();
 
@@ -209,7 +279,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected void testeQuadrantes() {
+    private void testeQuadrantes() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -269,7 +339,7 @@ public class AnalisesPreliminares {
     }
 
     /* Método para testar se todas as estacas estão contidas no plano XY. */
-    protected boolean testePlanoXY() {
+    private boolean testePlanoXY() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -304,7 +374,7 @@ public class AnalisesPreliminares {
     }
 
     /* Método para testar se todas as estacas estão contidas no plano XZ. */
-    protected boolean testePlanoXZ() {
+    private boolean testePlanoXZ() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -339,7 +409,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXY1() {
+    private boolean testeSimetriaXY1() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -372,7 +442,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXY2() {
+    private boolean testeSimetriaXY2() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -403,7 +473,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXY3() {
+    private boolean testeSimetriaXY3() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -444,7 +514,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXY4() {
+    private boolean testeSimetriaXY4() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -471,7 +541,7 @@ public class AnalisesPreliminares {
         } return false;
     }
 
-    protected boolean testeSimetriaXZ1() {
+    private boolean testeSimetriaXZ1() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -504,7 +574,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXZ2() {
+    private boolean testeSimetriaXZ2() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -535,7 +605,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXZ3() {
+    private boolean testeSimetriaXZ3() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -576,7 +646,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected boolean testeSimetriaXZ4() {
+    private boolean testeSimetriaXZ4() {
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
@@ -603,7 +673,7 @@ public class AnalisesPreliminares {
         } return false;
     }
 
-    protected double cosAi(double ai) {
+    private double cosAi(double ai) {
 
         double cosAi = Math.cos(Math.toRadians(ai));
 
@@ -617,7 +687,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected double senAi(double ai) {
+    private double senAi(double ai) {
 
         double senAi = Math.sin(Math.toRadians(ai));
 
@@ -631,7 +701,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected double cosWi(double wi) {
+    private double cosWi(double wi) {
 
         double cosWi;
 
@@ -659,7 +729,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected double senWi(double wi) {
+    private double senWi(double wi) {
 
         double senWi;
 
@@ -687,7 +757,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected double senAicosWi (double ai, double wi) {
+    private double senAicosWi (double ai, double wi) {
 
         double senAicosWi = senAi(ai)*cosWi(wi);
 
@@ -701,7 +771,7 @@ public class AnalisesPreliminares {
         }
     }
 
-    protected double senAisenWi (double ai, double wi) {
+    private double senAisenWi (double ai, double wi) {
 
         double senAisenWi = senAi(ai)*senWi(wi);
 
@@ -715,15 +785,19 @@ public class AnalisesPreliminares {
         }
     }
 
-    public Matrix getMatrizComponentesEstacas() {
+    protected Matrix getMatrizRigidezEstacas() {
+        return matrizRigidezEstacas;
+    }
+
+    protected Matrix getMatrizComponentesEstacas() {
         return matrizComponentesEstacas;
     }
 
-    public Matrix getMatrizRigidez() {
+    protected Matrix getMatrizRigidez() {
         return matrizRigidez;
     }
 
-    public char getCasoSimetria() {
+    protected char getCasoSimetria() {
         return casoSimetria;
     }
 }

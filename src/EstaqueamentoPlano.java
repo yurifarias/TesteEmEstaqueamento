@@ -33,91 +33,108 @@ public class EstaqueamentoPlano extends AnalisesPreliminares {
         matrizEsforcosRedTransformados = calcularEsforcosTransformados();
         matrizMovElasticoRedTransformado = calcularMovElasticoTransformado();
 
-        return (matrizComponentesEstacasRedTransformados.transpose()).times(matrizMovElasticoRedTransformado);
+        calcularMovElastico(caso);
+
+        return (getMatrizRigidezEstacas().times(matrizComponentesEstacasRedTransformados.transpose())).times(matrizMovElasticoRedTransformado);
     }
 
     /* Método chamado para reduzir a matriz das componentes das estacas */
-    protected Matrix reduzirMatrizCompontesEstacas(char caso) {
+    private Matrix reduzirMatrizCompontesEstacas(char caso) {
 
         double[][] matriz = new double[3][MainActivity.estaqueamento.length];
         double[][] componentes = getMatrizComponentesEstacas().getArray();
 
-        if (caso == 'B') {
+        switch (caso) {
 
-            for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+            case 'B':
 
-                matriz[0][i] = componentes[0][i];
-                matriz[1][i] = componentes[1][i];
-                matriz[2][i] = componentes[5][i];
-            }
+                for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 
-        } else if (caso == 'C') {
+                    matriz[0][i] = componentes[0][i];
+                    matriz[1][i] = componentes[1][i];
+                    matriz[2][i] = componentes[5][i];
 
-            for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+                } break;
 
-                matriz[0][i] = componentes[0][i];
-                matriz[1][i] = componentes[2][i];
-                matriz[2][i] = componentes[4][i];
-            }
+            case 'C':
+
+                for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
+
+                    matriz[0][i] = componentes[0][i];
+                    matriz[1][i] = componentes[2][i];
+                    matriz[2][i] = componentes[4][i];
+
+                } break;
         }
 
         return new Matrix(matriz);
     }
 
     /* Método chamado para reduzir a matriz de rigidez do estaqueamento */
-    protected Matrix reduzirMatrizRigidez(char caso) {
+    private Matrix reduzirMatrizRigidez(char caso) {
 
         double[][] matrizReduzida = new double[3][3];
 
-        if (caso == 'B') {
+        switch (caso) {
 
-            matrizReduzida[0][0] = getMatrizRigidez().getArray()[0][0];
-            matrizReduzida[0][1] = getMatrizRigidez().getArray()[0][1];
-            matrizReduzida[0][2] = getMatrizRigidez().getArray()[0][5];
+            case 'B':
 
-            matrizReduzida[1][0] = getMatrizRigidez().getArray()[1][0];
-            matrizReduzida[1][1] = getMatrizRigidez().getArray()[1][1];
-            matrizReduzida[1][2] = getMatrizRigidez().getArray()[1][5];
+                matrizReduzida[0][0] = getMatrizRigidez().getArray()[0][0];
+                matrizReduzida[0][1] = getMatrizRigidez().getArray()[0][1];
+                matrizReduzida[0][2] = getMatrizRigidez().getArray()[0][5];
 
-            matrizReduzida[2][0] = getMatrizRigidez().getArray()[5][0];
-            matrizReduzida[2][1] = getMatrizRigidez().getArray()[5][1];
-            matrizReduzida[2][2] = getMatrizRigidez().getArray()[5][5];
+                matrizReduzida[1][0] = getMatrizRigidez().getArray()[1][0];
+                matrizReduzida[1][1] = getMatrizRigidez().getArray()[1][1];
+                matrizReduzida[1][2] = getMatrizRigidez().getArray()[1][5];
 
-        } else if (caso == 'C') {
+                matrizReduzida[2][0] = getMatrizRigidez().getArray()[5][0];
+                matrizReduzida[2][1] = getMatrizRigidez().getArray()[5][1];
+                matrizReduzida[2][2] = getMatrizRigidez().getArray()[5][5];
 
-            matrizReduzida[0][0] = getMatrizRigidez().getArray()[0][0];
-            matrizReduzida[0][1] = getMatrizRigidez().getArray()[0][2];
-            matrizReduzida[0][2] = getMatrizRigidez().getArray()[0][4];
+                break;
 
-            matrizReduzida[1][0] = getMatrizRigidez().getArray()[2][0];
-            matrizReduzida[1][1] = getMatrizRigidez().getArray()[2][2];
-            matrizReduzida[1][2] = getMatrizRigidez().getArray()[2][4];
+            case 'C':
 
-            matrizReduzida[2][0] = getMatrizRigidez().getArray()[4][0];
-            matrizReduzida[2][1] = getMatrizRigidez().getArray()[4][2];
-            matrizReduzida[2][2] = getMatrizRigidez().getArray()[4][4];
+                matrizReduzida[0][0] = getMatrizRigidez().getArray()[0][0];
+                matrizReduzida[0][1] = getMatrizRigidez().getArray()[0][2];
+                matrizReduzida[0][2] = getMatrizRigidez().getArray()[0][4];
 
+                matrizReduzida[1][0] = getMatrizRigidez().getArray()[2][0];
+                matrizReduzida[1][1] = getMatrizRigidez().getArray()[2][2];
+                matrizReduzida[1][2] = getMatrizRigidez().getArray()[2][4];
+
+                matrizReduzida[2][0] = getMatrizRigidez().getArray()[4][0];
+                matrizReduzida[2][1] = getMatrizRigidez().getArray()[4][2];
+                matrizReduzida[2][2] = getMatrizRigidez().getArray()[4][4];
+
+                break;
         }
 
         return new Matrix(matrizReduzida);
     }
 
     /* Método chamado para reduzir a matriz de esforços externos */
-    protected Matrix reduzirMatrizEsforcos(char caso) {
+    private Matrix reduzirMatrizEsforcos(char caso) {
 
         double[][] matriz = new double[3][1];
 
-        if (caso == 'B') {
+        switch (caso) {
 
-            matriz[0][0] = MainActivity.esforcos[0][0];
-            matriz[1][0] = MainActivity.esforcos[1][0];
-            matriz[2][0] = MainActivity.esforcos[5][0];
+            case 'B':
 
-        } else if (caso == 'C') {
+                matriz[0][0] = MainActivity.esforcos[0][0];
+                matriz[1][0] = MainActivity.esforcos[1][0];
+                matriz[2][0] = MainActivity.esforcos[5][0];
 
-            matriz[0][0] = MainActivity.esforcos[0][0];
-            matriz[1][0] = MainActivity.esforcos[2][0];
-            matriz[2][0] = MainActivity.esforcos[4][0];
+                break;
+
+            case 'C':
+
+                matriz[0][0] = MainActivity.esforcos[0][0];
+                matriz[1][0] = MainActivity.esforcos[2][0];
+                matriz[2][0] = MainActivity.esforcos[4][0];
+
+                break;
         }
 
         return new Matrix(matriz);
@@ -126,76 +143,99 @@ public class EstaqueamentoPlano extends AnalisesPreliminares {
     /* Método para achar as coordenadas (xo, yo) ou (xo, zo) dos novos eixos coordenados x', y' ou x', z'
     após a translação dos eixos originais x e y ou x e z, e o ângulo de rotação fi após a rotação em torno do
     eixo original z ou eixo original y, como aritifício para solucionar os casos de estaqueamentos planos. */
-    protected void acharNovasCoordenadas(char caso) {
+    private void acharNovasCoordenadas(char caso) {
 
         double[][] mS = matrizRigidezReduzida.getArray();
 
-        if (caso == 'B') {
+        if (mS[0][1] == 0) {
+
+            fi = 0;
+
+        } else {
 
             fi = (Math.atan((2 * mS[0][1]) / (mS[0][0] - mS[1][1]))) / 2;
-            xo = (mS[0][0] * mS[1][2] - mS[0][1] * mS[0][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
-            yo = (mS[0][1] * mS[1][2] - mS[1][1] * mS[0][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
+        }
 
-        } else if (caso == 'C') {
+        switch (caso) {
 
-            fi = (Math.atan((2 * mS[0][1]) / (mS[0][0] - mS[1][1]))) / 2;
-            xo = (mS[0][1] * mS[0][2] - mS[0][0] * mS[1][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
-            zo = (mS[1][1] * mS[0][2] - mS[0][1] * mS[1][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
+            case 'B':
 
+                xo = (mS[0][0] * mS[1][2] - mS[0][1] * mS[0][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
+                yo = (mS[0][1] * mS[1][2] - mS[1][1] * mS[0][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
+
+                break;
+
+            case 'C':
+
+                xo = (mS[0][1] * mS[0][2] - mS[0][0] * mS[1][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
+                zo = (mS[1][1] * mS[0][2] - mS[0][1] * mS[1][2]) / (mS[0][0] * mS[1][1] - Math.pow(mS[0][1], 2));
+
+                break;
         }
     }
 
     /* Método para criar a matriz de trnasformação [T], ou tensor de transformação [T], referente aos
     casos de estaquemaneto plano em XY ou XZ */
-    protected Matrix montarTensorTransformacao(char caso) {
+    private Matrix montarTensorTransformacao(char caso) {
 
-        double[][] tensorT = new double[6][6];
+        double[][] tensorT = new double[3][3];
 
-        if (caso == 'B') {
+        switch (caso) {
 
-            tensorT[0][0] = Math.cos(fi);
-            tensorT[0][1] = Math.sin(fi);
-            tensorT[0][2] = 0;
-            tensorT[1][0] = -Math.sin(fi);
-            tensorT[1][1] = Math.cos(fi);
-            tensorT[1][2] = 0;
-            tensorT[2][0] = yo;;
-            tensorT[2][1] = -xo;
-            tensorT[2][2] = 1;
+            case 'B':
 
-        } else if (caso == 'C') {
+                tensorT[0][0] = Math.cos(fi);
+                tensorT[0][1] = Math.sin(fi);
+                tensorT[0][2] = 0;
 
-            tensorT[0][0] = Math.cos(fi);
-            tensorT[0][1] = Math.sin(fi);
-            tensorT[0][2] = 0;
-            tensorT[1][0] = -Math.sin(fi);
-            tensorT[1][1] = Math.cos(fi);
-            tensorT[1][2] = 0;
-            tensorT[2][0] = -zo;;
-            tensorT[2][1] = xo;
-            tensorT[2][2] = 1;
+                tensorT[1][0] = -Math.sin(fi);
+                tensorT[1][1] = Math.cos(fi);
+                tensorT[1][2] = 0;
 
-        } return new Matrix(tensorT);
+                tensorT[2][0] = yo;;
+                tensorT[2][1] = -xo;
+                tensorT[2][2] = 1;
+
+                break;
+
+            case 'C':
+
+                tensorT[0][0] = Math.cos(fi);
+                tensorT[0][1] = Math.sin(fi);
+                tensorT[0][2] = 0;
+
+                tensorT[1][0] = -Math.sin(fi);
+                tensorT[1][1] = Math.cos(fi);
+                tensorT[1][2] = 0;
+
+                tensorT[2][0] = -zo;;
+                tensorT[2][1] = xo;
+                tensorT[2][2] = 1;
+
+                break;
+        }
+
+        return new Matrix(tensorT);
     }
 
     /* Método para calcular a matriz de componentes de estaca transformados [p'], aplicando o tensor de
     transformação [T], retornando uma matriz 3 x n: [p'] = [T] * [p],
     onde n é número de estacas */
-    protected Matrix calcularComponentesEstacasTransformados() {
+    private Matrix calcularComponentesEstacasTransformados() {
 
         return tensorTransformacao.times(matrizComponentesEstacasReduzida);
     }
 
     /* Método para calcular a matriz de rigidez transformada [S'], aplicando o tensor de transformação [T],
     retornando uma matriz 3 x 3, por apresentar degeneração: [S'] = [T] * [S] * [T]transposta */
-    protected Matrix calcularRigidezTransformada() {
+    private Matrix calcularRigidezTransformada() {
 
         return tensorTransformacao.times(matrizRigidezReduzida.times(tensorTransformacao.transpose()));
     }
 
     /* Método para calcular a matriz de esforços transformados [F'], aplicando o tensor de transformação [T],
     retornando uma matraiz 3 x 1, por apresentar degeneração: [F'] = [T] * [F] */
-    protected Matrix calcularEsforcosTransformados() {
+    private Matrix calcularEsforcosTransformados() {
 
         return tensorTransformacao.times(matrizEsforcosExternos);
     }
@@ -203,15 +243,69 @@ public class EstaqueamentoPlano extends AnalisesPreliminares {
     /* Método para calcular a matriz do movimento elástico transformado do bloco [v'], após
     a transformação da matriz de rigidez [S'] e da matriz do esforços externos [F'],
     retornando uma matriz 3 x 1, por apresentar degeneração: [v'] = [S' ^ -1] * [F'] */
-    protected Matrix calcularMovElasticoTransformado() {
+    private Matrix calcularMovElasticoTransformado() {
 
         double[][] matriz = new double[3][1];
 
-        matriz[0][0] = matrizEsforcosRedTransformados.getArray()[0][0] / matrizRigidezRedTransformada.getArray()[0][0];
-        matriz[1][0] = matrizEsforcosRedTransformados.getArray()[1][0] / matrizRigidezRedTransformada.getArray()[1][1];
-        matriz[2][0] = matrizEsforcosRedTransformados.getArray()[2][0] / matrizRigidezRedTransformada.getArray()[2][2];
+        if (matrizRigidezRedTransformada.getArray()[0][0] == 0) {
+
+            matriz[0][0] = 0;
+
+        } else {
+
+            matriz[0][0] = matrizEsforcosRedTransformados.getArray()[0][0] / matrizRigidezRedTransformada.getArray()[0][0];
+        }
+
+        if (matrizRigidezRedTransformada.getArray()[1][1] == 0) {
+
+            matriz[1][0] = 0;
+
+        } else {
+
+            matriz[1][0] = matrizEsforcosRedTransformados.getArray()[1][0] / matrizRigidezRedTransformada.getArray()[1][1];
+        }
+
+        if (matrizRigidezRedTransformada.getArray()[2][2] == 0) {
+
+            matriz[2][0] = 0;
+
+        } else {
+
+            matriz[2][0] = matrizEsforcosRedTransformados.getArray()[2][0] / matrizRigidezRedTransformada.getArray()[2][2];
+        }
 
         return new Matrix(matriz);
+    }
+
+    private void calcularMovElastico(char caso) {
+
+        double[] matriz = new double[6];
+
+        switch (caso) {
+            case 'B':
+
+                matriz[0] = (tensorTransformacao.transpose().times(matrizMovElasticoRedTransformado)).getArray()[0][0];
+                matriz[1] = (tensorTransformacao.transpose().times(matrizMovElasticoRedTransformado)).getArray()[1][0];
+                matriz[2] = 0;
+                matriz[3] = 0;
+                matriz[4] = 0;
+                matriz[5] = (tensorTransformacao.transpose().times(matrizMovElasticoRedTransformado)).getArray()[2][0];
+
+                break;
+
+            case 'C':
+
+                matriz[0] = (tensorTransformacao.transpose().times(matrizMovElasticoRedTransformado)).getArray()[0][0];
+                matriz[1] = 0;
+                matriz[2] = (tensorTransformacao.transpose().times(matrizMovElasticoRedTransformado)).getArray()[1][0];;
+                matriz[3] = 0;
+                matriz[4] = (tensorTransformacao.transpose().times(matrizMovElasticoRedTransformado)).getArray()[2][0];
+                matriz[5] = 0;
+
+                break;
+        }
+
+        MainActivity.movElastico = matriz;
     }
 
     public Matrix getMatrizComponentesEstacasReduzida() {
