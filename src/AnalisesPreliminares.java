@@ -103,7 +103,7 @@ public class AnalisesPreliminares {
 
         double[][] matriz = new double[MainActivity.estaqueamento.length][MainActivity.estaqueamento.length];
 
-        double rigidezEstaca = (modElasticidade * Math.PI * MainActivity.diametroEstacas) / (4 * MainActivity.comprimentoEstacas);
+        double rigidezEstaca = (modElasticidade * Math.PI * Math.pow(MainActivity.diametroEstacas, 2)) / (4 * MainActivity.comprimentoEstacas);
 
         for (int i = 0; i < MainActivity.estaqueamento.length; i++) {
 

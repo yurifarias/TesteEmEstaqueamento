@@ -101,8 +101,8 @@ public class EstacasVerticais extends AnalisesPreliminares{
             fi = (Math.atan((2 * (mS[0][0] * mS[1][2] - mS[0][1] * mS[0][2]) / (mS[0][0] * (mS[2][2] - mS[1][1]) + Math.pow(mS[0][1], 2) - Math.pow(mS[0][2], 2))))) / 2;
         }
 
-        yo = (mS[0][2]*Math.cos(fi) + mS[0][1]*Math.sin(fi))/mS[0][0];
-        zo = (mS[0][2]*Math.sin(fi) - mS[0][1]*Math.cos(fi))/mS[0][0];
+        yo = (- mS[0][1] * Math.sin(fi) - mS[0][2] * Math.cos(fi))/mS[0][0];
+        zo = (  mS[0][1] * Math.cos(fi) - mS[0][2] * Math.sin(fi))/mS[0][0];
     }
 
     /* Método para criar a matriz de trnasformação [T], ou tensor de transformação [T], referente aos
@@ -114,9 +114,11 @@ public class EstacasVerticais extends AnalisesPreliminares{
         tensorT[0][0] = 1;
         tensorT[0][1] = 0;
         tensorT[0][2] = 0;
+
         tensorT[1][0] = -zo;
         tensorT[1][1] = Math.cos(fi);
         tensorT[1][2] = -Math.sin(fi);
+
         tensorT[2][0] = yo;
         tensorT[2][1] = Math.sin(fi);
         tensorT[2][2] = Math.cos(fi);
